@@ -1,35 +1,55 @@
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function AppointmentBooking() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { patientName, contactNumber, appointmentDate, appointmentTime } = location.state || {};
+
+  useEffect(() => {
+    if (patientName && contactNumber && appointmentDate && appointmentTime) {
+      // Save appointment details (e.g., to localStorage or an API)
+      const appointmentDetails = {
+        patientName,
+        contactNumber,
+        appointmentDate,
+        appointmentTime,
+      };
+      localStorage.setItem('appointmentDetails', JSON.stringify(appointmentDetails));
+      console.log('Appointment details saved:', appointmentDetails);
+    }
+  }, [patientName, contactNumber, appointmentDate, appointmentTime]);
+
+  const handleVideoCall = () => {
+    navigate('/video-consultation', { state: { patientName, appointmentDate, appointmentTime } });
+  };
+
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="card shadow-lg p-5" style={{ maxWidth: '600px', width: '100%' }}>
-        <div className="text-center">
-          <h2>Appointment Confirmed!</h2>
-          <p>Your appointment has been successfully booked.</p>
-          <div className="mt-4">
-            <h4>Appointment Details</h4>
-            <p><strong>Doctor:</strong> Dr. Anura Perera</p>
-            <p><strong>Date:</strong> 25th September 2023</p>
-            <p><strong>Time:</strong> 10:00 AM</p>
+    <div className="container py-5 text-center">
+      <h2 className="mb-4" style={{ color: '#007bff' }}>Appointment Confirmed</h2>
+      {patientName && contactNumber && appointmentDate && appointmentTime ? (
+        <div>
+          <p style={{ fontSize: '1.2rem', color: '#6c757d' }}>
+            Your appointment has been successfully booked. Here are the details:
+          </p>
+          <div className="card shadow p-4 mt-4">
+            <p><strong>Patient Name:</strong> {patientName}</p>
+            <p><strong>Contact Number:</strong> {contactNumber}</p>
+            <p><strong>Appointment Date:</strong> {appointmentDate}</p>
+            <p><strong>Appointment Time:</strong> {appointmentTime}</p>
           </div>
-          <Link className="btn btn-primary mt-3" to="/consult">Start Video Consultation</Link>
-          <Link className="btn btn-secondary mt-3 ms-2" to="/">Return to Home</Link>
+          <div className="mt-4">
+            <button className="btn btn-primary me-3">Voice Call</button>
+            <button className="btn btn-success" onClick={handleVideoCall}>Video Call</button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p style={{ fontSize: '1.2rem', color: '#6c757d' }}>
+          No appointment details available.
+        </p>
+      )}
     </div>
   );
 }
-
-fetch('/api/appointments')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Failed to fetch appointments');
-    }
-    return response.json();
-  })
-  .catch((error) => {
-    console.error('Error fetching appointments:', error);
-  });
 
 export default AppointmentBooking;

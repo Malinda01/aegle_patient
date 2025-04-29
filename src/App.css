@@ -9,6 +9,7 @@ body {
   background: linear-gradient(rgba(230, 247, 255, 0.8), rgba(230, 247, 255, 0.8)), 
               url('https://i.pinimg.com/236x/24/63/1b/24631bb031b38290926131028a1d01a7.jpg') no-repeat center center fixed;
   background-size: cover;
+  padding-top: 4.64rem; /* Add padding equal to the header height */
 }
 
 #root {
@@ -55,6 +56,13 @@ h1, h2 {
   left: 0;
   width: 100%;
   z-index: 1000; /* Ensure it stays above other elements */
+  height: 4.64rem; /* Ensure consistent header height */
+  margin-top: 0; /* Remove header top margin */
+}
+
+.navbar .logo {
+  width: 40px; /* Reduce the width further */
+  height: 10px; /* Set a specific height */
 }
 
 footer {
