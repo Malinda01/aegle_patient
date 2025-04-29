@@ -14,11 +14,12 @@ function WelcomePage() {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center vh-100"
+      className="d-flex justify-content-center align-items-start vh-100"
       style={{
         backgroundImage: 'url("https://via.placeholder.com/1920x1080")', // Replace with your image URL
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        paddingTop: '6rem', // Increase padding to move it slightly further down
       }}
     >
       <div className="welcome-page container text-center p-5 shadow rounded bg-white" style={{ maxWidth: '800px', padding: '3rem' }}>
@@ -30,7 +31,7 @@ function WelcomePage() {
           <button onClick={handleRegister} className="btn btn-primary btn-lg me-3">
             Register
           </button>
-          <button onClick={handleLogin} className="btn btn-secondary btn-lg">
+          <button onClick={handleLogin} className="btn btn-secondary btn-lg me-3">
             Login
           </button>
         </div>

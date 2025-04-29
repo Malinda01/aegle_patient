@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 
 function Profile() {
-  const [profile, setProfile] = useState({
-    name: 'John Doe',
+  const [isEditing, setIsEditing] = useState(false);
+  const [profileData, setProfileData] = useState({
+    fullName: 'John Doe',
     email: 'johndoe@example.com',
     phone: '123-456-7890',
-    address: '123 Main Street, Springfield',
+    address: '123 Main Street, Colombo, Sri Lanka',
+    dateOfBirth: '1990-01-01',
   });
-
-  const [isEditing, setIsEditing] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile({ ...profile, [name]: value });
+    setProfileData({ ...profileData, [name]: value });
   };
 
   const handleEditToggle = () => {
@@ -21,72 +21,92 @@ function Profile() {
 
   const handleSave = () => {
     setIsEditing(false);
-    // Add logic to save profile details (e.g., API call)
     alert('Profile updated successfully!');
+    // Add logic to save the updated profile data (e.g., API call)
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="card shadow p-4" style={{ maxWidth: '600px', width: '100%' }}>
-        <h2 className="text-center mb-4">Profile</h2>
+    <div className="container py-5">
+      <h1 className="mb-4" style={{ color: '#007bff' }}>Profile</h1>
+      <div className="card shadow p-4">
         <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            name="name"
-            value={profile.name}
-            onChange={handleChange}
-            disabled={!isEditing}
-          />
+          <label className="form-label">Full Name</label>
+          {isEditing ? (
+            <input
+              type="text"
+              className="form-control"
+              name="fullName"
+              value={profileData.fullName}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{profileData.fullName}</p>
+          )}
         </div>
         <div className="mb-3">
           <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            value={profile.email}
-            onChange={handleChange}
-            disabled={!isEditing}
-          />
+          {isEditing ? (
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              value={profileData.email}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{profileData.email}</p>
+          )}
         </div>
         <div className="mb-3">
           <label className="form-label">Phone</label>
-          <input
-            type="text"
-            className="form-control"
-            name="phone"
-            value={profile.phone}
-            onChange={handleChange}
-            disabled={!isEditing}
-          />
+          {isEditing ? (
+            <input
+              type="text"
+              className="form-control"
+              name="phone"
+              value={profileData.phone}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{profileData.phone}</p>
+          )}
         </div>
         <div className="mb-3">
           <label className="form-label">Address</label>
-          <textarea
-            className="form-control"
-            name="address"
-            value={profile.address}
-            onChange={handleChange}
-            disabled={!isEditing}
-          />
+          {isEditing ? (
+            <textarea
+              className="form-control"
+              name="address"
+              value={profileData.address}
+              onChange={handleChange}
+            ></textarea>
+          ) : (
+            <p>{profileData.address}</p>
+          )}
         </div>
-        <div className="text-center">
+        <div className="mb-3">
+          <label className="form-label">Date of Birth</label>
+          {isEditing ? (
+            <input
+              type="date"
+              className="form-control"
+              name="dateOfBirth"
+              value={profileData.dateOfBirth}
+              onChange={handleChange}
+            />
+          ) : (
+            <p>{profileData.dateOfBirth}</p>
+          )}
+        </div>
+        <div className="d-flex justify-content-end">
           {isEditing ? (
             <button className="btn btn-success me-2" onClick={handleSave}>
               Save
             </button>
-          ) : (
-            <button className="btn btn-primary me-2" onClick={handleEditToggle}>
-              Edit
-            </button>
-          )}
-          {isEditing && (
-            <button className="btn btn-secondary" onClick={handleEditToggle}>
-              Cancel
-            </button>
-          )}
+          ) : null}
+          <button className="btn btn-primary" onClick={handleEditToggle}>
+            {isEditing ? 'Cancel' : 'Edit'}
+          </button>
         </div>
       </div>
     </div>
